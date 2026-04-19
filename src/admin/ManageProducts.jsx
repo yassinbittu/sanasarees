@@ -213,8 +213,7 @@ function ManageProducts() {
                 >
                   {/* PRODUCT */}
                   <td className="px-5 py-4 flex items-center gap-3">
-                    <img
-                      src={`http://localhost:5000${p.image_url}`}
+                    <img src={`https://sana-backend-fim0.onrender.com${p.image_url}`} 
                       className="w-12 h-12 rounded-lg object-cover border"
                     />
                     <div>

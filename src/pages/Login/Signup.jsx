@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import api from "../api/apiClient"; //  ADD THIS
 
 function Signup() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' })
@@ -28,18 +29,14 @@ function Signup() {
     if (!validate()) return
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-          phone: formData.phone,
-          username: formData.name
-        })
-      })
+      const response = await api.post("/auth/register", {
+  email: formData.email,
+  password: formData.password,
+  phone: formData.phone,
+  username: formData.name,
+});
+
+const data = response.data;
 
       const data = await response.json()
 

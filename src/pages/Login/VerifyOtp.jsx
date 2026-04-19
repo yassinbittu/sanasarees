@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-
+import api from "../api/apiClient"; //  ADD THIS
 function VerifyOtp() {
   const [otp, setOtp] = useState('')
   const [message, setMessage] = useState('')
@@ -13,19 +13,15 @@ function VerifyOtp() {
     e.preventDefault()
 
     try {
-      const response = await fetch('http://localhost:5000/api/auth/verify-otp', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          email,
-          otp,
-          password,
-          phone,
-          username
-        })
-      })
+      const response = await api.post("/auth/verify-otp", {
+        email,
+        otp,
+        password,
+        phone,
+        username,
+      });
+
+      const data = response.data;
 
       const data = await response.json()
 

@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react'
+import api from "../api/apiClient"; // ✅ ADD THIS
 
 const AuthContext = createContext()
 
@@ -17,35 +18,32 @@ export const AuthProvider = ({ children }) => {
 
   // ✅ Single login API
   const login = async (email, password) => {
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/login', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, password })
-      })
+  try {
+    const response = await api.post("/auth/login", {
+      email,
+      password,
+    });
 
-      const data = await response.json()
+    const data = response.data;
 
-      if (data.success) {
-        const { access_token, refresh_token, user } = data.data
+    if (data.success) {
+      const { access_token, refresh_token, user } = data.data;
 
-        localStorage.setItem('accessToken', access_token)
-        localStorage.setItem('refreshToken', refresh_token)
-        localStorage.setItem('user', JSON.stringify(user))
-        localStorage.setItem('userRole', user.role)
+      localStorage.setItem("accessToken", access_token);
+      localStorage.setItem("refreshToken", refresh_token);
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("userRole", user.role);
 
-        setUser(user)
+      setUser(user);
 
-        return { success: true, role: user.role }
-      }
-
-      return { success: false, message: data.message }
-
-    } catch (error) {
-      console.error(error)
-      return { success: false, message: 'Server error' }
+      return { success: true, role: user.role };
     }
+
+    return { success: false, message: data.message };
+  } catch (error) {
+    return { success: false, message: "Server error" };
   }
+};
 
   const logout = () => {
     localStorage.clear()

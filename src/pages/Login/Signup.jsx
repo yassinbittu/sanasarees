@@ -30,31 +30,30 @@ function Signup() {
 
     try {
       const response = await api.post("/auth/register", {
-  email: formData.email,
-  password: formData.password,
-  phone: formData.phone,
-  username: formData.name,
-});
+        email: formData.email,
+        password: formData.password,
+        phone: formData.phone,
+        username: formData.name,
+      });
 
-const data = response.data;
-
+      const data = response.data;
 
       if (data.success) {
-  navigate('/verify-otp', {
-    state: {
-      email: formData.email,
-      password: formData.password,
-      phone: formData.phone,
-      username: formData.name
-    }
-  })
-} else {
-        setMessage('Registration failed')
+        navigate('/verify-otp', {
+          state: {
+            email: formData.email,
+            password: formData.password,
+            phone: formData.phone,
+            username: formData.name
+          }
+        })
+      } else {
+        setMessage(data.message || 'Registration failed')
       }
 
     } catch (error) {
       console.error(error)
-      setMessage('Server error')
+      setMessage(error.response?.data?.message || 'Server error')
     }
   }
 

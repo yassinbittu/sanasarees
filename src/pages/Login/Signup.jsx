@@ -38,7 +38,6 @@ function Signup() {
 
 const data = response.data;
 
-      const data = await response.json()
 
       if (data.success) {
   navigate('/verify-otp', {

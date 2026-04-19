@@ -23,7 +23,6 @@ function VerifyOtp() {
 
       const data = response.data;
 
-      const data = await response.json()
 
       if (data.success) {
         setMessage('Account created successfully!')

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import api from "../api/apiClient"; //  ADD THIS
+import api from "../../api/apiClient";
 
 function Signup() {
   const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' })

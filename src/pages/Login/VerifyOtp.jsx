@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
-import api from "../api/apiClient"; //  ADD THIS
+import api from "../../api/apiClient";
 function VerifyOtp() {
   const [otp, setOtp] = useState('')
   const [message, setMessage] = useState('')

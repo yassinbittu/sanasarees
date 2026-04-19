@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import api from "../../api/apiClient";
+
 function VerifyOtp() {
   const [otp, setOtp] = useState('')
   const [message, setMessage] = useState('')
@@ -19,21 +20,20 @@ function VerifyOtp() {
         password,
         phone,
         username,
-      });
+      })
 
-      const data = response.data;
-
+      const data = response.data
 
       if (data.success) {
         setMessage('Account created successfully!')
         setTimeout(() => navigate('/login'), 2000)
       } else {
-        setMessage('Invalid OTP')
+        setMessage(data.message || 'Invalid OTP')
       }
 
     } catch (error) {
       console.error(error)
-      setMessage('Server error')
+      setMessage(error.response?.data?.message || 'Server error')
     }
   }
 

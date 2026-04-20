@@ -57,7 +57,7 @@ api.interceptors.response.use(
       } catch (err) {
         // logout if refresh fails
         localStorage.clear();
-        window.location.href = "/login";
+        window.location.replace("/login");
         return Promise.reject(err);
       }
     }

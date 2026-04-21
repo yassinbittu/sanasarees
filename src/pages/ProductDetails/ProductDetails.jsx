@@ -23,7 +23,7 @@ function ProductDetails() {
 
         {/* IMAGE */}
         <img
-  src={`https://sana-backend-fim0.onrender.com${product.image_url}`}
+          src={`${import.meta.env.VITE_BASE_URL}${product.image_url}`}
           className="rounded-xl"
         />
 

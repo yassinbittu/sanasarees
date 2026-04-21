@@ -1,23 +1,23 @@
 import axios from "axios";
 
-const BASE_URL = "https://sana-backend-fim0.onrender.com/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 const api = axios.create({
   baseURL: BASE_URL,
 });
 
-// ✅ REQUEST INTERCEPTOR (attach token)
+// ✅ REQUEST INTERCEPTOR
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
 
   if (token) {
-    config.headers.Authorization = token; // ✅ no Bearer
+    config.headers.Authorization = token;
   }
 
   return config;
 });
 
-// 🔁 REFRESH TOKEN FUNCTION
+// 🔁 REFRESH TOKEN
 const refreshToken = async () => {
   const refresh = localStorage.getItem("refreshToken");
 
@@ -37,25 +37,24 @@ const refreshToken = async () => {
   return newAccess;
 };
 
-// ✅ RESPONSE INTERCEPTOR (handle 401)
+// ✅ RESPONSE INTERCEPTOR
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
-    const originalRequest = error.config;
+    const originalRequest = error.config || {};
 
-    // if token expired
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !originalRequest.url?.includes("/auth/refresh")
+    ) {
       originalRequest._retry = true;
 
       try {
         const newToken = await refreshToken();
-
-        // attach new token
         originalRequest.headers.Authorization = newToken;
-
-        return api(originalRequest); // 🔁 retry request
+        return api(originalRequest);
       } catch (err) {
-        // logout if refresh fails
         localStorage.clear();
         window.location.replace("/login");
         return Promise.reject(err);

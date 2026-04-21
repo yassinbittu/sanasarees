@@ -1,12 +1,66 @@
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import heroImage from '../../assets/hero-saree.jpg'
-
+import maggamImg from '../../assets/home_images/maggam.jpeg'
+import accessoryImg from '../../assets/home_images/accessories.jpeg'
+import blouseImg from '../../assets/home_images/blouse.jpeg'
+import computerImg from '../../assets/home_images/computer_work.jpeg'
+import festivalImg from '../../assets/home_images/festival.jpeg'
+import giftImg from '../../assets/home_images/gifts.jpeg'
+import trendingImg from '../../assets/home_images/trending.jpeg' 
 const categories = [
-  { id: 1, name: 'Trending Sarees', description: 'Most loved styles this season', image: 'https://images.unsplash.com/photo-1610030469983-98e550d6193c?w=400&h=500&fit=crop', link: '/products?category=trending' },
-  { id: 2, name: 'Festival Collection', description: 'Celebrate in elegance', image: 'https://images.unsplash.com/photo-1583391733956-3750e0ff4e8b?w=400&h=500&fit=crop', link: '/products?category=festival' },
-  { id: 3, name: 'Gift Collections', description: 'Perfect presents for loved ones', image: 'https://images.unsplash.com/photo-1594463750939-ebb28c3f7f75?w=400&h=500&fit=crop', link: '/products?category=gifts' },
-  { id: 4, name: 'Ladies Accessories', description: 'Complete your look', image: 'https://images.unsplash.com/photo-1611085583191-a3b181a88401?w=400&h=500&fit=crop', link: '/products?category=accessories' },
+  {
+    id: 1,
+    name: 'Trending Sarees',
+    description: 'Most loved styles this season',
+    image: trendingImg,
+    link: '/products?category=trending'
+  },
+  {
+    id: 2,
+    name: 'Festival Collection',
+    description: 'Celebrate in elegance',
+    image: festivalImg,
+    link: '/products?category=festival'
+  },
+  {
+    id: 3,
+    name: 'Gift Collections',
+    description: 'Perfect presents for loved ones',
+    image: giftImg,
+    link: '/products?category=gifts'
+  },
+  {
+    id: 4,
+    name: 'Ladies Accessories',
+    description: 'Complete your look',
+    image: accessoryImg,
+    link: '/products?category=accessories'
+  },
+
+  // 🔥 NEW SERVICE CATEGORIES
+
+  {
+    id: 5,
+    name: 'Maggam Work',
+    description: 'Traditional hand embroidery designs',
+    image: maggamImg,
+    link: '/boutique?service=maggam'
+  },
+  {
+    id: 6,
+    name: 'Computer Work',
+    description: 'Modern machine embroidery services',
+    image: computerImg,
+    link: '/boutique?service=computer'
+  },
+  {
+    id: 7,
+    name: 'Custom Blouse',
+    description: 'Design your own blouse with perfect fit',
+    image: blouseImg,
+    link: '/boutique?service=blouse'
+  }
 ]
 
 const whyChooseUs = [
@@ -17,6 +71,26 @@ const whyChooseUs = [
 ]
 
 function Home() {
+  const sliderRef = useRef(null)
+
+  useEffect(() => {
+    const slider = sliderRef.current
+    if (!slider) return
+
+    let scrollAmount = 0
+
+    const interval = setInterval(() => {
+      if (slider.scrollWidth - slider.clientWidth <= scrollAmount) {
+        scrollAmount = 0
+        slider.scrollTo({ left: 0, behavior: "smooth" })
+      } else {
+        scrollAmount += 300
+        slider.scrollTo({ left: scrollAmount, behavior: "smooth" })
+      }
+    }, 2500)
+
+    return () => clearInterval(interval)
+  }, [])
   return (
     <div>
       {/* ── Hero ── */}
@@ -61,28 +135,50 @@ function Home() {
             <h2 className="mb-4">Discover Your Style</h2>
             <p className="max-w-xl mx-auto">Explore our handpicked categories for every occasion</p>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {categories.map((cat, i) => (
-              <Link
-                key={cat.id}
-                to={cat.link}
-                className="relative rounded-xl overflow-hidden group animate-fade-in block"
-                style={{ aspectRatio: '3/4', animationDelay: `${i * 0.1}s` }}
-              >
-                <div className="absolute inset-0">
-                  <img src={cat.image} alt={cat.name} className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-110" />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[rgba(28,28,28,0.85)] to-transparent" />
-                </div>
-                <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                  <h3 className="text-lg font-semibold text-white mb-1">{cat.name}</h3>
-                  <p className="text-sm text-white/70 mb-3">{cat.description}</p>
-                  <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#C9A24D] opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-250">
-                    View Collection
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                  </span>
-                </div>
-              </Link>
-            ))}
+          <div className="relative">
+            <div
+              ref={sliderRef}
+              className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-1"
+            >
+
+              {categories.map((cat, i) => (
+                <Link
+                  key={cat.id}
+                  to={cat.link}
+                  className="min-w-[260px] sm:min-w-[280px] lg:min-w-[300px] relative rounded-xl overflow-hidden group animate-fade-in block flex-shrink-0"
+                  style={{ aspectRatio: '3/4', animationDelay: `${i * 0.1}s` }}
+                >
+                  <div className="absolute inset-0">
+                    <img
+                      src={cat.image}
+                      alt={cat.name}
+                      loading="lazy"
+                      className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-110"
+                    />
+
+                    {/* Improved overlay */}
+                    <div className="absolute bottom-0 left-0 right-0 p-4">
+                      <div className="bg-black/60 backdrop-blur-md rounded-lg p-4 border border-white/10">
+
+                        <h3 className="text-lg font-semibold text-white mb-1">
+                          {cat.name}
+                        </h3>
+
+                        <p className="text-sm text-white/90 mb-3">
+                          {cat.description}
+                        </p>
+
+                        <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#C9A24D] opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-250">
+                          View Collection →
+                        </span>
+
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              ))}
+
+            </div>
           </div>
         </div>
       </section>
@@ -124,9 +220,9 @@ function Home() {
               </p>
               <div className="flex flex-wrap gap-6 mb-8">
                 {[
-                  { icon: <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>, circle: <circle cx="12" cy="7" r="4"/>, label: 'Personal Stylist' },
-                  { icon: <><circle cx="12" cy="12" r="10"/><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12"/></>, label: 'Exclusive Discounts' },
-                  { icon: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></>, label: 'Easy Location' },
+                  { icon: <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />, circle: <circle cx="12" cy="7" r="4" />, label: 'Personal Stylist' },
+                  { icon: <><circle cx="12" cy="12" r="10" /><path d="M8.21 13.89 7 23l5-3 5 3-1.21-9.12" /></>, label: 'Exclusive Discounts' },
+                  { icon: <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></>, label: 'Easy Location' },
                 ].map((f, i) => (
                   <div key={i} className="flex items-center gap-2 text-sm font-medium text-[#1C1C1C]">
                     <svg viewBox="0 0 24 24" fill="none" stroke="#C9A24D" strokeWidth="2" width="22" height="22">{f.icon}{f.circle}</svg>

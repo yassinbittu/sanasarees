@@ -15,6 +15,28 @@ function ProductDetails() {
     const res = await getProductById(id)
     setProduct(res)
   }
+  // ✅ ADD HERE (below state, before return)
+  const phoneNumber = "917799296786";
+
+  const getWhatsAppLink = () => {
+    if (!product) return "#";
+
+    const message = `
+Hi, I want to order this saree 🛍️
+
+Name: ${product.name}
+Price: ₹${product.price}
+Fabric: ${product.fabric}
+Color: ${product.color}
+
+Image: ${product.image_url}
+
+Please share more details.
+  `;
+
+    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`;
+  };
+
 
   if (!product) return <div className="text-center pt-40">Loading...</div>
 
@@ -50,9 +72,14 @@ function ProductDetails() {
           <p>Color: {product.color}</p>
           <p>Care: {product.care}</p>
 
-          <Link to="/products" className="btn btn-primary mt-6">
-            Back
-          </Link>
+          <a
+            href={getWhatsAppLink()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block mt-6 bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-700 transition"
+          >
+            Order on WhatsApp
+          </a>
         </div>
       </div>
     </div>

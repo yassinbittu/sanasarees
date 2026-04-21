@@ -60,11 +60,22 @@ function Products() {
 
         {/* PRODUCTS */}
         <main className="flex-1">
-          <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
-            {filteredProducts.map(p => (
-              <ProductCard key={p.id} product={p} />
-            ))}
-          </div>
+          {filteredProducts.length === 0 ? (
+            <div className="flex flex-col items-center justify-center py-20 text-center">
+              <p className="text-lg font-medium text-gray-600">
+                Wait… admin is adding offer sarees 🛍️
+              </p>
+              <p className="text-sm text-gray-400 mt-2">
+                Please check back in a moment
+              </p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+              {filteredProducts.map(p => (
+                <ProductCard key={p.id} product={p} />
+              ))}
+            </div>
+          )}
         </main>
       </div>
     </div>

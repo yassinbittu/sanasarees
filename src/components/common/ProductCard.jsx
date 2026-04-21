@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+// import { getImageUrl } from '../../utils/getImageUrl'
 
 function ProductCard({ product }) {
   const {
@@ -14,14 +15,19 @@ function ProductCard({ product }) {
     discount
   } = product
 
+  console.log("ProductCard image_url:", image_url);
+
   return (
     <article className="bg-white rounded-xl overflow-hidden shadow-sm transition-all duration-250 group hover:-translate-y-2 hover:shadow-xl">
       <Link to={`/products/${id}`} className="block">
         <div className="relative overflow-hidden" style={{ aspectRatio: '3/4' }}>
           <img
-            src={`http://localhost:5000${image_url}`}
+            src={image_url}
             alt={name}
             className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-110"
+            onError={(e) => {
+              e.currentTarget.src = "/placeholder.svg";
+            }}
           />
 
           <div className="absolute top-3 left-3 flex flex-col gap-1">

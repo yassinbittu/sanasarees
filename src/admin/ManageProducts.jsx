@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import AdminSidebar from "./AdminSidebar";
 import Modal from "../components/common/Modal";
+// import { getImageUrl } from "../utils/getImageUrl";
 
 import {
   getProducts,
   createProduct,
-  uploadImage,
+  // uploadImage,
   deleteProduct,
   updateProduct,
 } from "./api/products";
+import { uploadImage } from "../utils/uploadImage";
 
 function ManageProducts() {
   const [products, setProducts] = useState([]);
@@ -87,12 +89,10 @@ function ManageProducts() {
   const handleSave = async () => {
     try {
       setLoading(true);
-
       let image_url = "";
 
       if (imageFile) {
-        const res = await uploadImage(imageFile);
-        image_url = res.data.url;
+        image_url = await uploadImage(imageFile); // ✅ supabase url
       }
 
       const existing = products.find((p) => p.id === editId);
@@ -214,8 +214,12 @@ function ManageProducts() {
                     {/* PRODUCT */}
                     <td className="px-5 py-4 flex items-center gap-3">
                       <img
-                        src={`${import.meta.env.VITE_BASE_URL}${p.image_url}`}
+                        src={p.image_url}
+                        alt={p.name}
                         className="w-12 h-12 rounded-lg object-cover border"
+                        onError={(e) => {
+                          e.currentTarget.src = "/placeholder.svg";
+                        }}
                       />
                       <div>
                         <p className="font-medium">{p.name}</p>
@@ -312,73 +316,73 @@ function ManageProducts() {
         </div>
       </main>
 
-      
-        {/* MODAL */}
-        <Modal
-          isOpen={showModal}
-          onClose={() => setShowModal(false)}
-          title={editId ? "Edit Product" : "Add Product"}
-          footer={
-            <>
-              <button
-                className="px-4 py-2 border rounded-lg"
-                onClick={() => setShowModal(false)}
-              >
-                Cancel
-              </button>
-              <button
-                className="bg-[#7A1E2D] text-white px-4 py-2 rounded-lg"
-                onClick={handleSave}
-              >
-                {loading ? "Saving..." : "Save"}
-              </button>
-            </>
-          }
-        >
-          <div className="flex flex-col gap-4">
-            <input name="name" value={form.name} onChange={handleChange} className={inputCls} placeholder="Product Name" />
 
-            <textarea name="description" value={form.description} onChange={handleChange} className={inputCls} placeholder="Description" />
+      {/* MODAL */}
+      <Modal
+        isOpen={showModal}
+        onClose={() => setShowModal(false)}
+        title={editId ? "Edit Product" : "Add Product"}
+        footer={
+          <>
+            <button
+              className="px-4 py-2 border rounded-lg"
+              onClick={() => setShowModal(false)}
+            >
+              Cancel
+            </button>
+            <button
+              className="bg-[#7A1E2D] text-white px-4 py-2 rounded-lg"
+              onClick={handleSave}
+            >
+              {loading ? "Saving..." : "Save"}
+            </button>
+          </>
+        }
+      >
+        <div className="flex flex-col gap-4">
+          <input name="name" value={form.name} onChange={handleChange} className={inputCls} placeholder="Product Name" />
 
-            <div className="grid grid-cols-2 gap-4">
-              <input name="price" type="number" value={form.price} onChange={handleChange} className={inputCls} placeholder="Price" />
-              <input name="originalPrice" type="number" value={form.originalPrice} onChange={handleChange} className={inputCls} placeholder="Original Price" />
-            </div>
+          <textarea name="description" value={form.description} onChange={handleChange} className={inputCls} placeholder="Description" />
 
-            <div className="grid grid-cols-2 gap-4">
-              <select name="occasion" value={form.occasion} onChange={handleChange} className={inputCls}>
-                <option>Wedding</option>
-                <option>Festival</option>
-                <option>Party</option>
-                <option>Casual</option>
-              </select>
-
-              <select name="fabric" value={form.fabric} onChange={handleChange} className={inputCls}>
-                <option>Silk</option>
-                <option>Cotton</option>
-                <option>Chiffon</option>
-                <option>Georgette</option>
-              </select>
-            </div>
-
-            <input name="color" value={form.color} onChange={handleChange} className={inputCls} placeholder="Color" />
-            <input name="care" value={form.care} onChange={handleChange} className={inputCls} placeholder="Care Instructions" />
-
-            <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
-
-            <div className="flex gap-6">
-              <label className="flex items-center gap-2">
-                <input type="checkbox" name="inStock" checked={form.inStock} onChange={handleChange} />
-                In Stock
-              </label>
-
-              <label className="flex items-center gap-2">
-                <input type="checkbox" name="isNew" checked={form.isNew} onChange={handleChange} />
-                New
-              </label>
-            </div>
+          <div className="grid grid-cols-2 gap-4">
+            <input name="price" type="number" value={form.price} onChange={handleChange} className={inputCls} placeholder="Price" />
+            <input name="originalPrice" type="number" value={form.originalPrice} onChange={handleChange} className={inputCls} placeholder="Original Price" />
           </div>
-        </Modal>
+
+          <div className="grid grid-cols-2 gap-4">
+            <select name="occasion" value={form.occasion} onChange={handleChange} className={inputCls}>
+              <option>Wedding</option>
+              <option>Festival</option>
+              <option>Party</option>
+              <option>Casual</option>
+            </select>
+
+            <select name="fabric" value={form.fabric} onChange={handleChange} className={inputCls}>
+              <option>Silk</option>
+              <option>Cotton</option>
+              <option>Chiffon</option>
+              <option>Georgette</option>
+            </select>
+          </div>
+
+          <input name="color" value={form.color} onChange={handleChange} className={inputCls} placeholder="Color" />
+          <input name="care" value={form.care} onChange={handleChange} className={inputCls} placeholder="Care Instructions" />
+
+          <input type="file" onChange={(e) => setImageFile(e.target.files[0])} />
+
+          <div className="flex gap-6">
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="inStock" checked={form.inStock} onChange={handleChange} />
+              In Stock
+            </label>
+
+            <label className="flex items-center gap-2">
+              <input type="checkbox" name="isNew" checked={form.isNew} onChange={handleChange} />
+              New
+            </label>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 }

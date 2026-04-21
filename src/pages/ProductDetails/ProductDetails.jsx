@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { getProductById } from '../../admin/api/products'
+import { getImageUrl } from '../../utils/getImageUrl'
 
 function ProductDetails() {
   const { id } = useParams()
@@ -23,8 +24,11 @@ function ProductDetails() {
 
         {/* IMAGE */}
         <img
-          src={`${import.meta.env.VITE_BASE_URL}${product.image_url}`}
+          src={product.image_url}
           className="rounded-xl"
+          onError={(e) => {
+            e.currentTarget.src = "/placeholder.svg";
+          }}
         />
 
         {/* DETAILS */}

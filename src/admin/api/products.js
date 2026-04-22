@@ -2,7 +2,7 @@ import api from "../../api/apiClient";
 
 // ✅ GET ALL PRODUCTS (with pagination)
 export const getProducts = async (page = 1) => {
-  const res = await api.get(`/products?page=${page}&per_page=10`);
+  const res = await api.get(`/products?page=${page}&per_page=12`);
   return res.data;
 };
 

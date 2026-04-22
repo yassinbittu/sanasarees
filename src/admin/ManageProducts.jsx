@@ -42,22 +42,36 @@ function ManageProducts() {
     fetchProducts();
   }, []);
 
-  const fetchProducts = async (pageNum = 1) => {
-    try {
-      setLoading(true);
+ const fetchProducts = async (pageNum = 1) => {
+  try {
+    setLoading(true);
 
-      const res = await getProducts(pageNum);
+    const res = await getProducts(pageNum);
 
-      setProducts(res.data || []);
-      setPagination(res.pagination || {});
-      setPage(pageNum);
+    // console.log("API RESPONSE 👉", res);
 
-    } catch {
-      setError("Failed to fetch products");
-    } finally {
-      setLoading(false);
-    }
-  };
+    const productsData =
+      res.products ||
+      res.data?.products ||
+      res.data ||
+      [];
+
+    const paginationData =
+      res.pagination ||
+      res.data?.pagination ||
+      {};
+
+    setProducts(productsData);
+    setPagination(paginationData);
+    setPage(pageNum);
+
+  } catch (err) {
+    console.error(err);
+    setError("Failed to fetch products");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;

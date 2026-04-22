@@ -41,7 +41,7 @@ function Products() {
 
   return (
     <div className="pt-[80px]">
-      <div className="max-w-[1280px] mx-auto px-6 py-10 flex gap-8">
+      <div className="max-w-[1280px] mx-auto px-3 sm:px-6 py-6 lg:flex gap-8">
 
         {/* FILTERS */}
         <aside className="hidden lg:block w-[260px]">
@@ -70,7 +70,7 @@ function Products() {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-5">
+            <div className="grid grid-cols-2 gap-4 sm:gap-5 xl:grid-cols-3">
               {filteredProducts.map(p => (
                 <ProductCard key={p.id} product={p} />
               ))}

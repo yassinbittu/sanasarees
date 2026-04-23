@@ -9,42 +9,44 @@ function Products() {
   const [selectedOccasion, setSelectedOccasion] = useState('All')
   const [selectedFabric, setSelectedFabric] = useState('All')
 
-  const [pagination, setPagination] = useState({})
-  const [page, setPage] = useState(1)
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    fetchProducts(1)
+    fetchProducts()
     fetchFilters()
   }, [])
 
-  const fetchProducts = async (pageNum = 1) => {
-    try {
-      setLoading(true)
+  const fetchProducts = async () => {
+  try {
+    // console.log("Fetching products...")
 
-      const res = await getProducts(pageNum)
+    setLoading(true)
 
-      const productsData =
-        res.products ||
-        res.data?.products ||
-        res.data ||
-        []
+    const res = await getProducts()
 
-      const paginationData =
-        res.pagination ||
-        res.data?.pagination ||
-        {}
+    // console.log("API response:", res)
 
-      setProducts(productsData)
-      setPagination(paginationData)
-      setPage(pageNum)
+    let productsData = []
 
-    } catch (err) {
-      console.error(err)
-    } finally {
-      setLoading(false)
+    if (Array.isArray(res)) {
+      productsData = res
+    } else if (Array.isArray(res?.products)) {
+      productsData = res.products
+    } else if (Array.isArray(res?.data?.products)) {
+      productsData = res.data.products
+    } else if (Array.isArray(res?.data)) {
+      productsData = res.data
     }
+
+    setProducts(productsData)
+
+  } catch (err) {
+    console.error("API ERROR:", err)
+  } finally {
+    // console.log("FINALLY CALLED")
+    setLoading(false)
   }
+}
 
   const fetchFilters = async () => {
     const res = await getProductFilters()
@@ -94,12 +96,10 @@ function Products() {
         {/* PRODUCTS */}
         <main className="flex-1">
 
-          {loading ? (
-            <div className="text-center py-20">Loading...</div>
-          ) : filteredProducts.length === 0 ? (
+          {filteredProducts.length === 0 ? (
             <div className="flex flex-col items-center justify-center py-20 text-center">
               <p className="text-lg font-medium text-gray-600">
-                Wait… admin is adding offer sarees 🛍️
+                Wait… sana is adding offer sarees 🛍️
               </p>
               <p className="text-sm text-gray-400 mt-2">
                 Please check back in a moment
@@ -114,88 +114,6 @@ function Products() {
                 ))}
               </div>
 
-              {/* PAGINATION INFO */}
-              <div className="flex justify-between items-center mt-6">
-                <p className="text-sm text-gray-500">
-                  Page {pagination.page || page} of {pagination.pages || 1}
-                </p>
-
-                <div className="flex gap-2">
-                  <button
-                    disabled={!pagination.has_prev}
-                    onClick={() => fetchProducts(page - 1)}
-                    className="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-40"
-                  >
-                    Prev
-                  </button>
-
-                  <button
-                    disabled={!pagination.has_next}
-                    onClick={() => fetchProducts(page + 1)}
-                    className="px-3 py-1 border rounded hover:bg-gray-100 disabled:opacity-40"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-
-              {/* 🔥 SMART PAGE NUMBERS */}
-              <div className="flex gap-2 mt-4 flex-wrap items-center">
-
-                {/* FIRST */}
-                <button
-                  onClick={() => fetchProducts(1)}
-                  className={`px-3 py-1 border rounded ${
-                    page === 1 ? "bg-black text-white" : "hover:bg-gray-100"
-                  }`}
-                >
-                  1
-                </button>
-
-                {/* LEFT DOT */}
-                {page > 3 && <span>...</span>}
-
-                {/* MIDDLE */}
-                {Array.from({ length: 3 }, (_, i) => {
-                  const pageNum = page - 1 + i
-
-                  if (pageNum > 1 && pageNum < (pagination.pages || 1)) {
-                    return (
-                      <button
-                        key={pageNum}
-                        onClick={() => fetchProducts(pageNum)}
-                        className={`px-3 py-1 border rounded ${
-                          page === pageNum
-                            ? "bg-black text-white"
-                            : "hover:bg-gray-100"
-                        }`}
-                      >
-                        {pageNum}
-                      </button>
-                    )
-                  }
-
-                  return null
-                })}
-
-                {/* RIGHT DOT */}
-                {page < (pagination.pages - 2) && <span>...</span>}
-
-                {/* LAST */}
-                {pagination.pages > 1 && (
-                  <button
-                    onClick={() => fetchProducts(pagination.pages)}
-                    className={`px-3 py-1 border rounded ${
-                      page === pagination.pages
-                        ? "bg-black text-white"
-                        : "hover:bg-gray-100"
-                    }`}
-                  >
-                    {pagination.pages}
-                  </button>
-                )}
-
-              </div>
             </>
           )}
         </main>

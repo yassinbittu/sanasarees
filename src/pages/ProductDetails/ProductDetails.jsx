@@ -33,7 +33,33 @@ Please share more details.`
 
     return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(message)}`
   }
+  const handleShare = async () => {
+    if (!product) return
 
+    const shareData = {
+      title: product.name,
+      text: `Check out this saree 🛍️
+
+${product.name}
+₹${product.price}
+${product.fabric} | ${product.color}`,
+      url: window.location.href // IMPORTANT
+    }
+
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData)
+      } else {
+        // fallback
+        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(
+          shareData.text + "\n" + shareData.url
+        )}`
+        window.open(whatsappUrl, "_blank")
+      }
+    } catch (err) {
+      console.error("Share failed:", err)
+    }
+  }
   if (!product) return <div className="text-center pt-40">Loading...</div>
 
   return (
@@ -141,6 +167,40 @@ Please share more details.`
             {/* STOCK */}
             <div className={`mb-6 font-medium flex items-center gap-2 ${product.in_stock ? 'text-green-600' : 'text-red-500'}`}>
               {product.in_stock ? "✔ In Stock - Ready to Ship" : "✖ Out of Stock"}
+            </div>
+            <div className="flex items-center gap-3 mb-6">
+
+              {/* SHARE BUTTON */}
+              <button
+                onClick={handleShare}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition text-sm font-medium"
+              >
+                {/* Share Icon */}
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="w-5 h-5"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8.684 13.342C9.353 12.925 10.146 12.5 11 12.5c.854 0 1.647.425 2.316.842m-4.632 0a2.5 2.5 0 11-2.368-4.342m6.999 4.342a2.5 2.5 0 102.368-4.342M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+
+                Share
+              </button>
+
+              {/* OPTIONAL: COPY LINK BUTTON
+              <button
+                onClick={() => {
+                  navigator.clipboard.writeText(window.location.href)
+                  alert("Link copied!")
+                }}
+                className="flex items-center gap-2 px-4 py-2 rounded-full border border-gray-300 hover:bg-gray-100 transition text-sm"
+              >
+                📋 Copy Link
+              </button> */}
+
             </div>
 
             {/* NOTICE */}

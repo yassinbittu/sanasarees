@@ -8,31 +8,32 @@ function VerifyOtp() {
   const location = useLocation()
   const navigate = useNavigate()
 
-  const { email, password, phone, username } = location.state || {}
+  const { email } = location.state || {}
 
   const handleSubmit = async (e) => {
     e.preventDefault()
 
     try {
-      const response = await api.post("/auth/verify-otp", {
+      const res = await api.post("/auth/verify-otp", {
         email,
         otp,
-        password,
-        phone,
-        username,
       })
 
-      const data = response.data
+      const data = res.data
 
       if (data.success) {
-        setMessage('Account created successfully!')
-        setTimeout(() => navigate('/login'), 2000)
+        // ✅ SAVE TOKENS
+        localStorage.setItem("accessToken", data.data.access_token)
+        localStorage.setItem("refreshToken", data.data.refresh_token)
+
+        setMessage('Account verified successfully!')
+
+        setTimeout(() => navigate('/'), 1500)
       } else {
         setMessage(data.message || 'Invalid OTP')
       }
 
     } catch (error) {
-      console.error(error)
       setMessage(error.response?.data?.message || 'Server error')
     }
   }

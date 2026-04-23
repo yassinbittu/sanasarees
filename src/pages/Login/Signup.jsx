@@ -3,7 +3,12 @@ import { Link, useNavigate } from 'react-router-dom'
 import api from "../../api/apiClient";
 
 function Signup() {
-  const [formData, setFormData] = useState({ name: '', email: '', password: '', phone: '' })
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: '',
+    phone: ''
+  })
   const [errors, setErrors] = useState({})
   const [message, setMessage] = useState('')
   const navigate = useNavigate()
@@ -25,34 +30,28 @@ function Signup() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-
     if (!validate()) return
 
     try {
-      const response = await api.post("/auth/register", {
+      const res = await api.post("/auth/register", {
         email: formData.email,
         password: formData.password,
         phone: formData.phone,
         username: formData.name,
       });
 
-      const data = response.data;
+      const data = res.data;
 
       if (data.success) {
+        // ✅ ONLY EMAIL NEEDED NOW
         navigate('/verify-otp', {
-          state: {
-            email: formData.email,
-            password: formData.password,
-            phone: formData.phone,
-            username: formData.name
-          }
+          state: { email: formData.email }
         })
       } else {
         setMessage(data.message || 'Registration failed')
       }
 
     } catch (error) {
-      console.error(error)
       setMessage(error.response?.data?.message || 'Server error')
     }
   }
@@ -62,13 +61,20 @@ function Signup() {
       <div className="bg-white p-8 rounded-xl shadow-lg w-[400px]">
         <h2 className="text-2xl mb-5">Sign Up</h2>
 
-        {message && <p className="mb-3 text-green-600">{message}</p>}
+        {message && <p className="mb-3 text-red-600">{message}</p>}
 
         <form onSubmit={handleSubmit}>
-          <input type="text" name="name" placeholder="Full Name" className="border p-2 w-full mb-3" onChange={handleChange} />
-          <input type="email" name="email" placeholder="Email" className="border p-2 w-full mb-3" onChange={handleChange} />
-          <input type="password" name="password" placeholder="Password" className="border p-2 w-full mb-3" onChange={handleChange} />
-          <input type="text" name="phone" placeholder="Phone" className="border p-2 w-full mb-3" onChange={handleChange} />
+          <input type="text" name="name" placeholder="Full Name"
+            className="border p-2 w-full mb-3" onChange={handleChange} />
+
+          <input type="email" name="email" placeholder="Email"
+            className="border p-2 w-full mb-3" onChange={handleChange} />
+
+          <input type="password" name="password" placeholder="Password"
+            className="border p-2 w-full mb-3" onChange={handleChange} />
+
+          <input type="text" name="phone" placeholder="Phone"
+            className="border p-2 w-full mb-3" onChange={handleChange} />
 
           <button className="bg-[#7A1E2D] text-white w-full py-2 rounded">
             Create Account
@@ -76,7 +82,8 @@ function Signup() {
         </form>
 
         <p className="mt-4 text-sm">
-          Already have an account? <Link to="/login" className="text-[#7A1E2D]">Login</Link>
+          Already have an account?
+          <Link to="/login" className="text-[#7A1E2D] ml-1">Login</Link>
         </p>
       </div>
     </div>

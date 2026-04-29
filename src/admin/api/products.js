@@ -1,8 +1,11 @@
 import api from "../../api/apiClient";
 
-// ✅ GET ALL PRODUCTS (with pagination)
-export const getProducts = async (page = 1) => {
-  const res = await api.get(`/products?page=${page}&per_page=12`);
+// ✅ GET ALL PRODUCTS (with pagination and optional filters)
+export const getProducts = async (page = 1, queryParams = '') => {
+  const params = queryParams 
+    ? `page=${page}&per_page=12&${queryParams}`
+    : `page=${page}&per_page=12`;
+  const res = await api.get(`/products?${params}`);
   return res.data;
 };
 

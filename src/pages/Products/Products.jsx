@@ -17,11 +17,26 @@ function Products() {
   const [showFilters, setShowFilters] = useState(false)
 
   const loaderRef = useRef(null)
+  
+  // Refs to track current filter values for useEffect
+  const filtersRef = useRef({ selectedOccasion, selectedFabric, search })
+
+  useEffect(() => {
+    filtersRef.current = { selectedOccasion, selectedFabric, search }
+  }, [selectedOccasion, selectedFabric, search])
 
   useEffect(() => {
     fetchProducts(1)
     fetchFilters()
   }, [])
+
+  // Reset page when filters change
+  useEffect(() => {
+    setPage(1)
+    setHasNext(true)
+    setProducts([])
+    fetchProducts(1)
+  }, [selectedOccasion, selectedFabric, search])
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -41,7 +56,16 @@ function Products() {
     try {
       setLoading(true)
 
-      const res = await getProducts(pageNum)
+      // Build query params for server-side filtering
+      const params = new URLSearchParams()
+      params.append('page', pageNum)
+      params.append('per_page', 12)
+      
+      if (selectedOccasion !== 'All') params.append('occasion', selectedOccasion)
+      if (selectedFabric !== 'All') params.append('fabric', selectedFabric)
+      if (debouncedSearch.trim()) params.append('search', debouncedSearch.trim())
+
+      const res = await getProducts(pageNum, params.toString())
 
       const productsData =
         res.products || res.data?.products || res.data || []
@@ -72,22 +96,23 @@ function Products() {
   const occasions = ['All', ...filters.occasions]
   const fabrics = ['All', ...filters.fabrics]
 
-  const filteredProducts = useMemo(() => {
-    let filtered = [...products]
+  // Debounce search input
+  const [debouncedSearch, setDebouncedSearch] = useState("")
+  
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedSearch(search)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [search])
 
-    if (selectedOccasion !== 'All')
-      filtered = filtered.filter(p => p.occasion === selectedOccasion)
-
-    if (selectedFabric !== 'All')
-      filtered = filtered.filter(p => p.fabric === selectedFabric)
-
-    if (search.trim())
-      filtered = filtered.filter(p =>
-        p.name?.toLowerCase().includes(search.toLowerCase())
-      )
-
-    return filtered
-  }, [products, selectedOccasion, selectedFabric, search])
+  // Update search in fetch when debounced search changes
+  useEffect(() => {
+    setPage(1)
+    setHasNext(true)
+    setProducts([])
+    fetchProducts(1)
+  }, [debouncedSearch])
 
   return (
     <div className="pt-[80px]">
@@ -162,7 +187,7 @@ function Products() {
         {/* PRODUCTS */}
         <main className="flex-1">
 
-          {filteredProducts.length === 0 ? (
+          {products.length === 0 && !loading ? (
             <div className="text-center py-20 text-gray-500">
               {search
                 ? `No sarees found for "${search}"`
@@ -170,7 +195,7 @@ function Products() {
             </div>
           ) : (
             <div className="grid grid-cols-2 gap-4 sm:gap-5 xl:grid-cols-3">
-              {filteredProducts.map(p => (
+              {products.map(p => (
                 <ProductCard key={p.id} product={p} />
               ))}
             </div>

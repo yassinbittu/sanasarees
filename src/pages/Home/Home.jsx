@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import heroImage from '../../assets/hero-saree.jpg'
+import heroImage from '../../assets/hero-mother.png'
 import maggamImg from '../../assets/home_images/maggam.jpeg'
 import accessoryImg from '../../assets/home_images/accessories.jpeg'
 import blouseImg from '../../assets/home_images/blouse.jpeg'
 import computerImg from '../../assets/home_images/computer_work.jpeg'
 import festivalImg from '../../assets/home_images/festival.jpeg'
 import giftImg from '../../assets/home_images/gifts.jpeg'
-import trendingImg from '../../assets/home_images/trending.jpeg' 
+import trendingImg from '../../assets/home_images/trending.jpeg'
 const categories = [
   {
     id: 1,
@@ -93,39 +93,189 @@ function Home() {
   }, [])
   return (
     <div>
+
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#fdf2f4]">
+
+        {/* Background Image */}
         <div className="absolute inset-0 z-0">
-          <img src={heroImage} alt="Elegant Saree Collection" className="w-full h-full object-cover" />
-          <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, rgba(28,28,28,0.75) 0%, rgba(28,28,28,0.4) 50%, rgba(122,30,45,0.3) 100%)' }} />
+
+         
+<img
+  src={heroImage}
+  alt="Mother's Day Collection"
+  className="
+    w-full h-full
+    object-cover
+    object-[72%_center]
+    md:object-center
+    scale-[1.08]
+    md:scale-100
+  "
+/>
+```
+
+
+          {/* Premium Overlay */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background:
+                'linear-gradient(90deg, rgba(20,20,20,0.45) 0%, rgba(20,20,20,0.10) 45%, rgba(122,30,45,0.08) 100%)'
+            }}
+          />
+
+          {/* Soft Glow */}
+          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-pink-200/20 blur-[120px] rounded-full" />
+
         </div>
 
-        <div className="relative z-10 text-center max-w-[900px] px-6 pt-20">
-          <span className="inline-block text-xs font-medium uppercase tracking-[3px] text-[#C9A24D] mb-6 animate-fade-in">
-            Est. with Love &amp; Tradition
-          </span>
-          <h1 className="font-heading text-white leading-[1.1] mb-6 animate-fade-in" style={{ fontSize: 'clamp(2.5rem,7vw,5rem)', animationDelay: '0.1s' }}>
-            Elegance Woven<br />with Tradition
-          </h1>
-          <p className="text-white/85 mb-10 tracking-wide animate-fade-in" style={{ fontSize: 'clamp(1rem,2vw,1.25rem)', animationDelay: '0.2s' }}>
-            Trendy Sarees • Boutique Craftsmanship • Festival Collections
-          </p>
-          <div className="flex flex-wrap gap-4 justify-center animate-fade-in" style={{ animationDelay: '0.3s' }}>
-            <Link to="/boutique" className="btn btn-secondary btn-large text-white border-white hover:bg-white hover:text-[#7A1E2D]">
-              Book Boutique Service
-            </Link>
-            <Link to="/products" className="btn btn-accent btn-large">
-              Shop Sarees
-            </Link>
+        {/* Hero Content */}
+       {/* Hero Content */}
+<div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-36 md:pt-28 pb-16">
+
+          <div className="max-w-[650px]">
+
+            {/* Small Badge */}
+            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 mb-6 animate-fade-in">
+
+              <span className="w-2 h-2 rounded-full bg-pink-300"></span>
+
+              <span className="text-white text-xs tracking-[3px] uppercase font-medium">
+                Mother’s Day Special
+              </span>
+
+            </div>
+
+            {/* Heading */}
+            <h1
+              className="font-heading text-white leading-[0.95] mb-6 animate-fade-in"
+              style={{
+                fontSize: 'clamp(3.5rem,8vw,7rem)',
+                textShadow: '0 10px 40px rgba(0,0,0,0.25)',
+                animationDelay: '0.1s'
+              }}
+            >
+              Happy <br />
+              Mother’s Day
+            </h1>
+
+            {/* Subtitle */}
+            <p
+              className="text-white/90 leading-relaxed mb-8 max-w-[540px] animate-fade-in"
+              style={{
+                fontSize: 'clamp(1rem,2vw,1.2rem)',
+                animationDelay: '0.2s'
+              }}
+            >
+              Celebrate the woman who made every moment beautiful with timeless sarees, boutique craftsmanship & elegant collections.
+            </p>
+
+            {/* Offer Card */}
+            <div className="inline-flex items-center gap-5 bg-white/15 backdrop-blur-xl border border-white/20 rounded-3xl px-7 py-5 mb-10 animate-fade-in">
+
+              <div>
+
+                <span className="block text-white/70 text-xs uppercase tracking-[2px] mb-1">
+                  Limited Time Offer
+                </span>
+
+                <span className="text-white text-4xl font-bold leading-none">
+                  Flat 20% OFF
+                </span>
+
+              </div>
+
+              <div className="w-px h-16 bg-white/20"></div>
+
+              <span className="text-pink-100 text-sm leading-relaxed">
+                On Selected Sarees <br />
+                For Mother’s Day
+              </span>
+
+            </div>
+
+            {/* Buttons */}
+            <div
+              className="flex flex-wrap gap-4 animate-fade-in"
+              style={{ animationDelay: '0.3s' }}
+            >
+
+              {/* Primary Button */}
+              <Link
+                to="/products"
+                className="
+            px-8 py-4 rounded-full
+            bg-[#A1173C]
+            hover:bg-[#8A1232]
+            text-white
+            font-medium
+            tracking-wide
+            transition-all
+            duration-300
+            shadow-[0_10px_40px_rgba(161,23,60,0.45)]
+            hover:scale-105
+          "
+              >
+                Shop Mother’s Day Collection
+              </Link>
+
+              {/* Secondary Button */}
+              <Link
+                to="/boutique"
+                className="
+            px-8 py-4 rounded-full
+            border border-white/40
+            bg-white/10
+            backdrop-blur-md
+            text-white
+            font-medium
+            tracking-wide
+            hover:bg-white
+            hover:text-[#7A1E2D]
+            transition-all
+            duration-300
+          "
+              >
+                Gift Mom Something Beautiful
+              </Link>
+
+            </div>
+
           </div>
+
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-white/60 text-[0.7rem] uppercase tracking-[2px]">
-          <span>Scroll to explore</span>
-          <div className="w-px h-10 bg-gradient-to-b from-[#C9A24D] to-transparent" style={{ animation: 'scrollPulse 2s ease-in-out infinite' }} />
+        {/* Floating Flowers */}
+        <div className="absolute top-20 left-10 text-pink-200 text-3xl animate-bounce opacity-70">
+          ✿
         </div>
+
+        <div className="absolute bottom-20 left-1/3 text-pink-300 text-2xl animate-pulse opacity-60">
+          ❀
+        </div>
+
+        <div className="absolute top-1/4 right-20 text-pink-100 text-2xl animate-bounce opacity-70">
+          ✿
+        </div>
+
+        {/* Scroll Indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-white/70 text-[0.7rem] uppercase tracking-[2px]">
+
+          <span>Scroll to explore</span>
+
+          <div
+            className="w-px h-10 bg-gradient-to-b from-pink-300 to-transparent"
+            style={{
+              animation: 'scrollPulse 2s ease-in-out infinite'
+            }}
+          />
+
+        </div>
+
       </section>
+      ```
+
 
       {/* ── Featured Categories ── */}
       <section className="py-24 bg-[#FAF9F7]">

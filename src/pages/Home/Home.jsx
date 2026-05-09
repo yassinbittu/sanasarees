@@ -100,20 +100,20 @@ function Home() {
         {/* Background Image */}
         <div className="absolute inset-0 z-0">
 
-         
-<img
-  src={heroImage}
-  alt="Mother's Day Collection"
-  className="
+
+          <img
+            src={heroImage}
+            alt="Mother's Day Collection"
+            className="
     w-full h-full
     object-cover
-    object-[72%_center]
+    object-[85%_center]
     md:object-center
     scale-[1.08]
     md:scale-100
   "
-/>
-```
+          />
+          ```
 
 
           {/* Premium Overlay */}
@@ -131,8 +131,8 @@ function Home() {
         </div>
 
         {/* Hero Content */}
-       {/* Hero Content */}
-<div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-36 md:pt-28 pb-16">
+        {/* Hero Content */}
+        <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-36 md:pt-28 pb-16">
 
           <div className="max-w-[650px]">
 

@@ -80,11 +80,11 @@ function LayoutWrapper() {
 
 function App() {
   return (
-    <AuthProvider>
+    // <AuthProvider>
       <BrowserRouter>
         <LayoutWrapper />
       </BrowserRouter>
-    </AuthProvider>
+    // </AuthProvider>
   )
 }
 

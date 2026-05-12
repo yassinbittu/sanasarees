@@ -87,11 +87,10 @@ function Navbar() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-250 ${
-        isScrolled
+      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-250 ${isScrolled
           ? "bg-white shadow-md py-2"
           : "bg-transparent py-4"
-      }`}
+        }`}
     >
 
       <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
@@ -123,11 +122,10 @@ function Navbar() {
                   className={`relative text-sm font-medium uppercase tracking-wide py-2 transition-colors duration-150
                   after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-0.5
                   after:bg-[#C9A24D] after:transition-all after:duration-250
-                  ${
-                    location.pathname === link.path
+                  ${location.pathname === link.path
                       ? "text-[#7A1E2D] after:w-full"
                       : "text-[#1C1C1C] after:w-0 hover:text-[#7A1E2D] hover:after:w-full"
-                  }`}
+                    }`}
                 >
                   {link.label}
                 </Link>
@@ -163,7 +161,11 @@ function Navbar() {
 
               <Link
                 to="/login"
-                className="btn btn-secondary btn-small"
+                className={`px-5 py-2 rounded-full font-medium transition border
+  ${isScrolled
+                    ? "bg-[#7A1E2D] text-white border-[#7A1E2D]"
+                    : "bg-white text-[#7A1E2D] border-white"
+                  }`}
               >
                 Login
               </Link>
@@ -238,25 +240,22 @@ function Navbar() {
           >
 
             <span
-              className={`block w-full h-0.5 bg-[#7A1E2D] ${
-                menuOpen
+              className={`block w-full h-0.5 bg-[#7A1E2D] ${menuOpen
                   ? "rotate-45 translate-y-[7px]"
                   : ""
-              }`}
+                }`}
             />
 
             <span
-              className={`block w-full h-0.5 bg-[#7A1E2D] ${
-                menuOpen ? "opacity-0" : ""
-              }`}
+              className={`block w-full h-0.5 bg-[#7A1E2D] ${menuOpen ? "opacity-0" : ""
+                }`}
             />
 
             <span
-              className={`block w-full h-0.5 bg-[#7A1E2D] ${
-                menuOpen
+              className={`block w-full h-0.5 bg-[#7A1E2D] ${menuOpen
                   ? "-rotate-45 -translate-y-[7px]"
                   : ""
-              }`}
+                }`}
             />
 
           </button>
@@ -267,11 +266,10 @@ function Navbar() {
 
       {/* MOBILE MENU */}
       <div
-        className={`md:hidden fixed top-[68px] left-0 right-0 bottom-0 bg-white flex flex-col p-8 gap-8 transition-all duration-300 ${
-          menuOpen
+        className={`md:hidden fixed top-[68px] left-0 right-0 bottom-0 bg-white flex flex-col p-8 gap-8 transition-all duration-300 ${menuOpen
             ? "translate-x-0"
             : "translate-x-full"
-        }`}
+          }`}
       >
 
         <ul className="flex flex-col gap-5">

@@ -88,10 +88,25 @@ function Products() {
     }
   }
 
-  const fetchFilters = async () => {
+ const fetchFilters = async () => {
+  try {
     const res = await getProductFilters()
-    setFilters(res)
+
+    setFilters({
+      occasions: res?.occasions || res?.data?.occasions || [],
+      fabrics: res?.fabrics || res?.data?.fabrics || [],
+      colors: res?.colors || res?.data?.colors || [],
+    })
+  } catch (err) {
+    console.error(err)
+
+    setFilters({
+      occasions: [],
+      fabrics: [],
+      colors: [],
+    })
   }
+}
 
   const occasions = ['All', ...filters.occasions]
   const fabrics = ['All', ...filters.fabrics]

@@ -1,7 +1,13 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { FaShoppingCart } from "react-icons/fa";
+
+import {
+  addToCartApi
+} from '../../pages/Cart/api/cart'
 
 function ProductCard({ product }) {
+
   const {
     id,
     name,
@@ -13,6 +19,19 @@ function ProductCard({ product }) {
     is_new,
     discount
   } = product
+
+  const handleAddToCart = async (e) => {
+    e.preventDefault()
+
+    try {
+      await addToCartApi(id, 1)
+
+      alert("Added to cart")
+    } catch (err) {
+      console.log(err)
+      alert("Failed to add cart")
+    }
+  }
 
   return (
     <article className="w-full bg-white rounded-xl overflow-hidden border border-gray-100 shadow-sm hover:shadow-md transition duration-300">
@@ -37,7 +56,6 @@ function ProductCard({ product }) {
             {discount && <span className="badge badge-primary">{discount}% Off</span>}
           </div>
         </div>
-
 
         {/* CONTENT */}
         <div className="p-2 sm:p-3">
@@ -70,10 +88,20 @@ function ProductCard({ product }) {
             {in_stock ? 'In stock' : 'Out of stock'}
           </p>
 
+          {/* ADD TO CART */}
+          <button
+            onClick={handleAddToCart}
+            disabled={!in_stock}
+            className="mt-3 w-full bg-[#7A1E2D] hover:bg-[#5e1622] text-white py-2 rounded-lg text-sm flex items-center justify-center gap-2 transition disabled:opacity-50"
+          >
+            <FaShoppingCart />
+            Add To Cart
+          </button>
+
         </div>
       </Link>
     </article>
   )
 }
 
-export default ProductCard  
+export default ProductCard

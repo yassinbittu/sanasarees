@@ -3,37 +3,47 @@ import { useParams, Link } from 'react-router-dom'
 import { getProductById } from '../../admin/api/products'
 
 import {
-  addToCartApi
-} from '../Cart/api/cart'
+  addToCart,
+  getCartItemQuantity,
+  decreaseCartItem
+} from "../../utils/cart";
 
 function ProductDetails() {
 
   const { id } = useParams()
 
   const [product, setProduct] = useState(null)
-
+  const [quantity, setQuantity] = useState(0);
   useEffect(() => {
     fetchProduct()
   }, [id])
 
   const fetchProduct = async () => {
-    const res = await getProductById(id)
-    setProduct(res)
+
+    const res = await getProductById(id);
+
+    setProduct(res);
+
+    setQuantity(getCartItemQuantity(res.id));
   }
 
-  const handleAddToCart = async () => {
+  const handleAdd = () => {
 
-    try {
+    addToCart(product, 1);
 
-      await addToCartApi(product.id, 1)
+    setQuantity(prev => prev + 1);
 
-      alert("Added to cart successfully")
+    window.dispatchEvent(new Event("cartUpdated"));
+  };
 
-    } catch (err) {
-      console.log(err)
-      alert("Failed to add cart")
-    }
-  }
+  const handleDecrease = () => {
+
+    decreaseCartItem(product.id);
+
+    setQuantity(prev => Math.max(prev - 1, 0));
+
+    window.dispatchEvent(new Event("cartUpdated"));
+  };
 
   const handleShare = async () => {
 
@@ -275,31 +285,59 @@ ${product.fabric} | ${product.color}`,
             {/* ACTIONS */}
             <div className="flex flex-col sm:flex-row gap-3 mb-6">
 
-              {/* ADD TO CART */}
-              <button
-                onClick={handleAddToCart}
-                disabled={!product.in_stock}
-                className="flex-1 bg-[#7A1E2D] text-white py-3 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-[#5c1521] transition disabled:opacity-50"
-              >
+              {/* CART BUTTON */}
+              {quantity === 0 ? (
 
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  strokeWidth="2"
+                <button
+                  onClick={handleAdd}
+                  disabled={!product.in_stock}
+                  className="flex-1 bg-[#7A1E2D] text-white py-3 rounded-lg flex items-center justify-center gap-2 font-medium hover:bg-[#5c1521] transition disabled:opacity-50"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h12M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
-                  />
-                </svg>
 
-                Add To Cart
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="w-5 h-5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-1.5 6h12M10 21a1 1 0 100-2 1 1 0 000 2zm8 0a1 1 0 100-2 1 1 0 000 2z"
+                    />
+                  </svg>
 
-              </button>
+                  Add To Cart
+
+                </button>
+
+              ) : (
+
+                <div className="flex-1 flex items-center justify-between bg-[#7A1E2D] text-white rounded-lg overflow-hidden">
+
+                  <button
+                    onClick={handleDecrease}
+                    className="w-16 py-3 text-2xl hover:bg-[#5c1521]"
+                  >
+                    -
+                  </button>
+
+                  <span className="font-semibold text-lg">
+                    {quantity}
+                  </span>
+
+                  <button
+                    onClick={handleAdd}
+                    className="w-16 py-3 text-2xl hover:bg-[#5c1521]"
+                  >
+                    +
+                  </button>
+
+                </div>
+
+              )}
 
               {/* CONTINUE SHOPPING */}
               <Link

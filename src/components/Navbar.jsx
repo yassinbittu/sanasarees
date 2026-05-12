@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { FaUserCircle, FaShoppingCart } from "react-icons/fa";
 
-import { getCartCountApi } from "../pages/Cart/api/cart";
+import { getCartCount } from "../utils/cart";
 
 function Navbar() {
 
@@ -52,24 +52,28 @@ function Navbar() {
   }, []);
 
   // FETCH CART COUNT
-  const fetchCartCount = async () => {
-    try {
+  // FETCH CART COUNT
+const fetchCartCount = () => {
+  setCartCount(getCartCount());
+};
 
-      const res = await getCartCountApi();
+useEffect(() => {
 
-      setCartCount(res?.data?.count || 0);
+  fetchCartCount();
 
-    } catch (err) {
+  window.addEventListener(
+    "cartUpdated",
+    fetchCartCount
+  );
 
-      console.log(err);
-    }
+  return () => {
+    window.removeEventListener(
+      "cartUpdated",
+      fetchCartCount
+    );
   };
 
-  useEffect(() => {
-
-    fetchCartCount();
-
-  }, [location]);
+}, []);
 
   const navLinks = [
     { path: "/", label: "Home" },

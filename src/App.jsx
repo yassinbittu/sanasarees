@@ -7,8 +7,10 @@ import Footer from './components/Footer'
 import ProtectedRoute from './auth/ProtectedRoute'
 
 import Home from './pages/Home/Home'
+import Profile from './pages/Profile/Profile'
 import Products from './pages/Products/Products'
 import ProductDetails from './pages/ProductDetails/ProductDetails'
+import Cart from './pages/Cart/Cart'
 import Boutique from './pages/Boutique/Boutique'
 import Order from './pages/Order/Order'
 import Login from './pages/Login/Login'
@@ -32,8 +34,10 @@ function LayoutWrapper() {
       <main className="flex-1">
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/profile" element={<Profile />} />
           <Route path="/products" element={<Products />} />
           <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
           <Route path="/boutique" element={<Boutique />} />
           <Route path="/order" element={<Order />} />
           <Route path="/signup" element={<Signup />} />

@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("accessToken");
 
-  if (token) {
+  if (token && !config.skipAuth) {
     config.headers.Authorization = token;
   }
 
@@ -44,10 +44,10 @@ api.interceptors.response.use(
     const originalRequest = error.config || {};
 
     if (
-      error.response?.status === 401 &&
-      !originalRequest._retry &&
-      !originalRequest.url?.includes("/auth/refresh")
-    ) {
+  error.response?.status === 401 &&
+  !originalRequest._retry &&
+  !originalRequest.url?.includes("/auth/refresh")
+) {
       originalRequest._retry = true;
 
       try {

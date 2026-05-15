@@ -6,7 +6,7 @@ import { getCartCount } from "../utils/cart";
 
 function Navbar() {
 
-  const [isScrolled, setIsScrolled] = useState(false);
+
   const [menuOpen, setMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
@@ -16,16 +16,6 @@ function Navbar() {
 
   const isLoggedIn = false;
 
-  // SCROLL EFFECT
-  useEffect(() => {
-
-    const onScroll = () => setIsScrolled(window.scrollY > 20);
-
-    window.addEventListener("scroll", onScroll);
-
-    return () => window.removeEventListener("scroll", onScroll);
-
-  }, []);
 
   // CLOSE MOBILE MENU
   useEffect(() => {
@@ -52,28 +42,28 @@ function Navbar() {
   }, []);
 
   // FETCH CART COUNT
-  // FETCH CART COUNT
-const fetchCartCount = () => {
-  setCartCount(getCartCount());
-};
 
-useEffect(() => {
+  const fetchCartCount = () => {
+    setCartCount(getCartCount());
+  };
 
-  fetchCartCount();
+  useEffect(() => {
 
-  window.addEventListener(
-    "cartUpdated",
-    fetchCartCount
-  );
+    fetchCartCount();
 
-  return () => {
-    window.removeEventListener(
+    window.addEventListener(
       "cartUpdated",
       fetchCartCount
     );
-  };
 
-}, []);
+    return () => {
+      window.removeEventListener(
+        "cartUpdated",
+        fetchCartCount
+      );
+    };
+
+  }, []);
 
   const navLinks = [
     { path: "/", label: "Home" },
@@ -91,10 +81,13 @@ useEffect(() => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-250 ${isScrolled
-          ? "bg-white shadow-md py-2"
-          : "bg-transparent py-4"
-        }`}
+      className="
+fixed top-0 left-0 right-0 z-[1000]
+bg-white
+border-b border-[#EFE7DD]
+py-2
+shadow-sm
+"
     >
 
       <div className="max-w-[1280px] mx-auto px-6 flex items-center justify-between">
@@ -165,11 +158,15 @@ useEffect(() => {
 
               <Link
                 to="/login"
-                className={`px-5 py-2 rounded-full font-medium transition border
-  ${isScrolled
-                    ? "bg-[#7A1E2D] text-white border-[#7A1E2D]"
-                    : "bg-white text-[#7A1E2D] border-white"
-                  }`}
+                className="
+px-5 py-2 rounded-full
+font-medium
+bg-[#7A1E2D]
+text-white
+border border-[#7A1E2D]
+hover:bg-[#631826]
+transition-all duration-300
+"
               >
                 Login
               </Link>
@@ -245,8 +242,8 @@ useEffect(() => {
 
             <span
               className={`block w-full h-0.5 bg-[#7A1E2D] ${menuOpen
-                  ? "rotate-45 translate-y-[7px]"
-                  : ""
+                ? "rotate-45 translate-y-[7px]"
+                : ""
                 }`}
             />
 
@@ -257,8 +254,8 @@ useEffect(() => {
 
             <span
               className={`block w-full h-0.5 bg-[#7A1E2D] ${menuOpen
-                  ? "-rotate-45 -translate-y-[7px]"
-                  : ""
+                ? "-rotate-45 -translate-y-[7px]"
+                : ""
                 }`}
             />
 
@@ -269,60 +266,105 @@ useEffect(() => {
       </div>
 
       {/* MOBILE MENU */}
+      {/* MOBILE MENU */}
       <div
-        className={`md:hidden fixed top-[68px] left-0 right-0 bottom-0 bg-white flex flex-col p-8 gap-8 transition-all duration-300 ${menuOpen
-            ? "translate-x-0"
-            : "translate-x-full"
+        className={`md:hidden fixed inset-0 z-[99999]
+  bg-[#F8F6F2]
+  transition-all duration-300 ease-in-out
+  ${menuOpen
+            ? "opacity-100 visible"
+            : "opacity-0 invisible"
           }`}
       >
 
-        <ul className="flex flex-col gap-5">
+        {/* MENU CONTENT */}
+        <div className="
+    h-full w-full
+    flex flex-col
+    bg-[#F8F6F2]
+    pt-28 px-8 pb-10
+  ">
+          {/* CLOSE BUTTON */}
+          <button
+            onClick={() => setMenuOpen(false)}
+            className="
+  absolute top-6 right-6
+  text-[#7A1E2D]
+  text-4xl
+  leading-none
+  "
+          >
+            ×
+          </button>
+          {/* LINKS */}
+          <ul className="flex flex-col gap-8">
 
-          {navLinks.map((link) => (
+            {navLinks.map((link) => (
 
-            <li key={link.path}>
+              <li key={link.path}>
 
-              <Link to={link.path}>
-                {link.label}
-              </Link>
+                <Link
+                  to={link.path}
+                  className="
+            text-[1.35rem]
+            font-medium
+            text-[#241B1C]
+            hover:text-[#7A1E2D]
+            transition-colors duration-300
+            "
+                >
+                  {link.label}
+                </Link>
 
-            </li>
-          ))}
+              </li>
 
-        </ul>
+            ))}
 
-        <div className="flex flex-col gap-4">
+          </ul>
 
-          {!isLoggedIn ? (
+          {/* BUTTON */}
+          <div className="mt-10">
 
-            <Link
-              to="/login"
-              className="btn btn-secondary"
-            >
-              Login
-            </Link>
-
-          ) : (
-
-            <>
+            {!isLoggedIn ? (
 
               <Link
-                to="/profile"
-                className="text-lg"
+                to="/login"
+                className="
+          w-full flex items-center justify-center
+          px-6 py-4
+          rounded-full
+          bg-[#7A1E2D]
+          text-white
+          font-semibold
+          tracking-wide
+          "
               >
-                Profile
+                LOGIN
               </Link>
 
-              <button
-                onClick={handleLogout}
-                className="text-red-500 text-left"
-              >
-                Logout
-              </button>
+            ) : (
 
-            </>
+              <div className="flex flex-col gap-5">
 
-          )}
+                <Link
+                  to="/profile"
+                  className="text-lg"
+                >
+                  Profile
+                </Link>
+
+                <button
+                  onClick={handleLogout}
+                  className="text-red-500 text-left"
+                >
+                  Logout
+                </button>
+
+              </div>
+
+            )}
+
+          </div>
 
         </div>
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
-import heroImage from '../../assets/hero-mother.png'
+import heroImage from '../../assets/hero.png'
 import maggamImg from '../../assets/home_images/maggam.jpeg'
 import accessoryImg from '../../assets/home_images/accessories.jpeg'
 import blouseImg from '../../assets/home_images/blouse.jpeg'
@@ -95,150 +95,140 @@ function Home() {
     <div>
 
       {/* ── Hero ── */}
-      <section className="relative min-h-screen flex items-center overflow-hidden bg-[#fdf2f4]">
+      {/* ───────── PREMIUM HERO ───────── */}
+      <section className="relative min-h-screen overflow-hidden bg-[#F8F6F2]">
 
         {/* Background Image */}
-        <div className="absolute inset-0 z-0">
-
+        <div className="absolute inset-0">
 
           <img
             src={heroImage}
-            alt="Mother's Day Collection"
+            alt="SANA Sarees"
             className="
-    w-full h-full
-    object-cover
-    object-[85%_center]
-    md:object-center
-    scale-[1.08]
-    md:scale-100
-  "
+        w-full h-full object-cover
+        object-[72%_center]
+        md:object-center
+      "
           />
-          ```
-
 
           {/* Premium Overlay */}
           <div
             className="absolute inset-0"
             style={{
               background:
-                'linear-gradient(90deg, rgba(20,20,20,0.45) 0%, rgba(20,20,20,0.10) 45%, rgba(122,30,45,0.08) 100%)'
+                'linear-gradient(90deg, rgba(15,15,15,0.62) 0%, rgba(15,15,15,0.32) 32%, rgba(15,15,15,0.08) 60%, rgba(15,15,15,0.02) 100%)'
             }}
           />
 
-          {/* Soft Glow */}
-          <div className="absolute top-0 left-0 w-[500px] h-[500px] bg-pink-200/20 blur-[120px] rounded-full" />
-
         </div>
 
-        {/* Hero Content */}
-        {/* Hero Content */}
-        <div className="relative z-10 w-full max-w-[1280px] mx-auto px-5 sm:px-6 pt-36 md:pt-28 pb-16">
+        {/* Content */}
+        <div className="relative z-10 max-w-[1280px] mx-auto px-5 sm:px-8">
 
-          <div className="max-w-[650px]">
+          <div className="min-h-screen flex items-center">
 
-            {/* Small Badge */}
-            <div className="inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white/20 backdrop-blur-md border border-white/30 mb-6 animate-fade-in">
+            <div className="max-w-[620px] pt-36 md:pt-20 pb-16">
 
-              <span className="w-2 h-2 rounded-full bg-pink-300"></span>
+              {/* Badge */}
+              <div className="
+          inline-flex items-center gap-2
+          px-5 py-2 mb-6
+          rounded-full
+          bg-white/10
+          border border-white/20
+          backdrop-blur-xl
+        ">
 
-              <span className="text-white text-xs tracking-[3px] uppercase font-medium">
-                Mother’s Day Special
-              </span>
+                <span className="w-2 h-2 rounded-full bg-[#C9A24D]" />
 
-            </div>
-
-            {/* Heading */}
-            <h1
-              className="font-heading text-white leading-[0.95] mb-6 animate-fade-in"
-              style={{
-                fontSize: 'clamp(3.5rem,8vw,7rem)',
-                textShadow: '0 10px 40px rgba(0,0,0,0.25)',
-                animationDelay: '0.1s'
-              }}
-            >
-              Happy <br />
-              Mother’s Day
-            </h1>
-
-            {/* Subtitle */}
-            <p
-              className="text-white/90 leading-relaxed mb-8 max-w-[540px] animate-fade-in"
-              style={{
-                fontSize: 'clamp(1rem,2vw,1.2rem)',
-                animationDelay: '0.2s'
-              }}
-            >
-              Celebrate the woman who made every moment beautiful with timeless sarees, boutique craftsmanship & elegant collections.
-            </p>
-
-            {/* Offer Card */}
-            <div className="inline-flex items-center gap-5 bg-white/15 backdrop-blur-xl border border-white/20 rounded-3xl px-7 py-5 mb-10 animate-fade-in">
-
-              <div>
-
-                <span className="block text-white/70 text-xs uppercase tracking-[2px] mb-1">
-                  Limited Time Offer
-                </span>
-
-                <span className="text-white text-4xl font-bold leading-none">
-                  Flat 20% OFF
+                <span className="
+            text-white/90
+            uppercase
+            tracking-[3px]
+            text-[11px]
+            font-medium
+          ">
+                  Timeless Elegance
                 </span>
 
               </div>
 
-              <div className="w-px h-16 bg-white/20"></div>
-
-              <span className="text-pink-100 text-sm leading-relaxed">
-                On Selected Sarees <br />
-                For Mother’s Day
-              </span>
-
-            </div>
-
-            {/* Buttons */}
-            <div
-              className="flex flex-wrap gap-4 animate-fade-in"
-              style={{ animationDelay: '0.3s' }}
-            >
-
-              {/* Primary Button */}
-              <Link
-                to="/products"
+              {/* Heading */}
+              <h1
                 className="
-            px-8 py-4 rounded-full
-            bg-[#A1173C]
-            hover:bg-[#8A1232]
             text-white
-            font-medium
-            tracking-wide
-            transition-all
-            duration-300
-            shadow-[0_10px_40px_rgba(161,23,60,0.45)]
-            hover:scale-105
+            leading-[0.95]
+            mb-6
+            font-semibold
           "
+                style={{
+                  fontSize: 'clamp(2.7rem,7vw,6.5rem)',
+                  textShadow: '0 10px 40px rgba(0,0,0,0.35)'
+                }}
               >
-                Shop Mother’s Day Collection
-              </Link>
+                Elegance <br />
+                Woven Into <br />
+                Every Saree
+              </h1>
 
-              {/* Secondary Button */}
-              <Link
-                to="/boutique"
+              {/* Subtitle */}
+              <p
                 className="
-            px-8 py-4 rounded-full
-            border border-white/40
-            bg-white/10
-            backdrop-blur-md
-            text-white
-            font-medium
-            tracking-wide
-            hover:bg-white
-            hover:text-[#7A1E2D]
-            transition-all
-            duration-300
+            text-white/85
+            leading-relaxed
+            mb-10
+            max-w-[520px]
           "
+                style={{
+                  fontSize: 'clamp(1rem,2vw,1.15rem)'
+                }}
               >
-                Gift Mom Something Beautiful
-              </Link>
+                Discover timeless sarees, handcrafted boutique
+                collections and elegant styles curated for
+                every celebration.
+              </p>
+
+              {/* Buttons */}
+              <div className="flex flex-wrap gap-4">
+
+                {/* Primary */}
+                <Link
+                  to="/products"
+                  className="
+              px-6 md:px-8 py-3.5 md:py-4 rounded-full
+              bg-[#7A1E2D]
+              hover:bg-[#631826]
+              text-white
+              font-medium
+              tracking-wide
+              transition-all duration-300
+              shadow-[0_12px_40px_rgba(122,30,45,0.45)]
+              hover:scale-105
+            "
+                >
+                  Explore Collection
+                </Link>
+
+                {/* Secondary */}
+                <Link
+                  to="/boutique"
+                  className="
+              px-8 py-4 rounded-full
+              border border-white/30
+              bg-white/10
+              backdrop-blur-xl
+              text-white
+              font-medium
+              tracking-wide
+              hover:bg-white
+              hover:text-[#7A1E2D]
+              transition-all duration-300
+            "
+                >
+                  Visit Boutique
+                </Link>
+
+              </div>
 
             </div>
 
@@ -246,92 +236,199 @@ function Home() {
 
         </div>
 
-        {/* Floating Flowers */}
-        <div className="absolute top-20 left-10 text-pink-200 text-3xl animate-bounce opacity-70">
-          ✿
-        </div>
-
-        <div className="absolute bottom-20 left-1/3 text-pink-300 text-2xl animate-pulse opacity-60">
-          ❀
-        </div>
-
-        <div className="absolute top-1/4 right-20 text-pink-100 text-2xl animate-bounce opacity-70">
-          ✿
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 hidden md:flex flex-col items-center gap-2 text-white/70 text-[0.7rem] uppercase tracking-[2px]">
-
-          <span>Scroll to explore</span>
-
-          <div
-            className="w-px h-10 bg-gradient-to-b from-pink-300 to-transparent"
-            style={{
-              animation: 'scrollPulse 2s ease-in-out infinite'
-            }}
-          />
-
-        </div>
+        {/* Bottom Fade */}
+        <div className="
+    absolute bottom-0 left-0 right-0
+    h-32
+    bg-gradient-to-t
+    from-[#F8F6F2]
+    to-transparent
+  " />
 
       </section>
-      ```
 
 
       {/* ── Featured Categories ── */}
-      <section className="py-24 bg-[#FAF9F7]">
-        <div className="max-w-[1280px] mx-auto px-6">
-          <div className="text-center mb-16">
-            <span className="section-tag">Curated Collections</span>
-            <h2 className="mb-4">Discover Your Style</h2>
-            <p className="max-w-xl mx-auto">Explore our handpicked categories for every occasion</p>
-          </div>
-          <div className="relative">
+      {/* ───────── STATS SECTION ───────── */}
+      <section className="bg-white border-y border-[#EFE7DD]">
+
+        <div className="
+    max-w-[1280px] mx-auto
+    grid grid-cols-2 md:grid-cols-4
+  ">
+
+          {[
+            {
+              title: 'Premium Sarees',
+              desc: 'Handpicked elegant collections'
+            },
+            {
+              title: '5000+ Customers',
+              desc: 'Trusted by women across town'
+            },
+            {
+              title: 'Boutique Services',
+              desc: 'Maggam & custom blouse work'
+            },
+            {
+              title: 'Exclusive Designs',
+              desc: 'Curated for every occasion'
+            }
+          ].map((item, i) => (
+
             <div
-              ref={sliderRef}
-              className="flex gap-6 overflow-x-auto scroll-smooth no-scrollbar px-1"
+              key={i}
+              className="
+          p-6 md:p-10
+          border-b md:border-b-0
+          border-[#EFE7DD]
+          md:border-r last:border-r-0
+          text-center
+        "
             >
 
-              {categories.map((cat, i) => (
-                <Link
-                  key={cat.id}
-                  to={cat.link}
-                  className="min-w-[260px] sm:min-w-[280px] lg:min-w-[300px] relative rounded-xl overflow-hidden group animate-fade-in block flex-shrink-0"
-                  style={{ aspectRatio: '3/4', animationDelay: `${i * 0.1}s` }}
-                >
-                  <div className="absolute inset-0">
-                    <img
-                      src={cat.image}
-                      alt={cat.name}
-                      loading="lazy"
-                      className="w-full h-full object-cover transition-transform duration-400 group-hover:scale-110"
-                    />
+              <h3 className="
+          text-[#1C1C1C]
+          text-lg md:text-2xl
+          font-semibold
+          mb-2
+        ">
+                {item.title}
+              </h3>
 
-                    {/* Improved overlay */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                      <div className="bg-black/60 backdrop-blur-md rounded-lg p-4 border border-white/10">
-
-                        <h3 className="text-lg font-semibold text-white mb-1">
-                          {cat.name}
-                        </h3>
-
-                        <p className="text-sm text-white/90 mb-3">
-                          {cat.description}
-                        </p>
-
-                        <span className="inline-flex items-center gap-1 text-xs font-semibold uppercase tracking-wide text-[#C9A24D] opacity-0 translate-y-2.5 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-250">
-                          View Collection →
-                        </span>
-
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              ))}
+              <p className="
+          text-sm
+          text-[#6F5A61]
+          leading-relaxed
+        ">
+                {item.desc}
+              </p>
 
             </div>
-          </div>
+
+          ))}
+
         </div>
+
       </section>
+
+      {/* ───────── COLLECTIONS ───────── */}
+<section className="py-20 bg-[#F8F6F2]">
+
+  <div className="max-w-[1280px] mx-auto px-5 sm:px-6">
+
+    {/* Heading */}
+    <div className="text-center mb-14">
+
+      <span className="section-tag">
+        Curated Collections
+      </span>
+
+      <h2 className="mb-4">
+        Discover Your Style
+      </h2>
+
+      <p className="max-w-2xl mx-auto">
+        Explore timeless sarees, boutique services
+        and handcrafted collections curated for
+        every occasion.
+      </p>
+
+    </div>
+
+    {/* Cards */}
+    <div
+      ref={sliderRef}
+      className="
+        flex gap-5 overflow-x-auto
+        no-scrollbar scroll-smooth
+        px-1
+      "
+    >
+
+      {categories.map((cat, i) => (
+
+        <Link
+          key={cat.id}
+          to={cat.link}
+          className="
+            min-w-[240px]
+            sm:min-w-[280px]
+            lg:min-w-[300px]
+            rounded-[28px]
+            overflow-hidden
+            bg-white
+            shadow-[0_10px_30px_rgba(0,0,0,0.06)]
+            hover:-translate-y-2
+            hover:shadow-[0_20px_50px_rgba(0,0,0,0.12)]
+            transition-all duration-500
+            flex-shrink-0
+            group
+          "
+          style={{
+            animationDelay: `${i * 0.1}s`
+          }}
+        >
+
+          {/* Image */}
+          <div className="relative aspect-[3/4] overflow-hidden">
+
+            <img
+              src={cat.image}
+              alt={cat.name}
+              className="
+                w-full h-full object-cover
+                transition-transform duration-700
+                group-hover:scale-110
+              "
+            />
+
+            <div className="
+              absolute inset-0
+              bg-gradient-to-t
+              from-black/70
+              via-black/10
+              to-transparent
+            " />
+
+          </div>
+
+          {/* Content */}
+          <div className="p-5">
+
+            <h3 className="
+              text-[#1C1C1C]
+              text-lg font-semibold mb-2
+            ">
+              {cat.name}
+            </h3>
+
+            <p className="
+              text-sm text-[#6F5A61]
+              leading-relaxed mb-4
+            ">
+              {cat.description}
+            </p>
+
+            <span className="
+              text-[#7A1E2D]
+              text-sm font-semibold
+              tracking-wide
+            ">
+              Explore Collection →
+            </span>
+
+          </div>
+
+        </Link>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
 
       {/* ── Why Choose Us ── */}
       <section className="py-24 bg-[#F5F3F0]">
